@@ -35,6 +35,10 @@ Caused by: java.sql.SQLFeatureNotSupportedException: not implemented by SQLite J
 
 ## Spring Boot 3.3.1
 
+```sh
+mvn compile exec:java -Pspringboot -Dspringboot.version=3.3.1
+```
+
 ```
 Caused by: java.lang.NullPointerException: fid must not be null
 	at org.geotools.filter.identity.FeatureIdImpl.setID(FeatureIdImpl.java:55)
@@ -45,3 +49,17 @@ Caused by: java.lang.NullPointerException: fid must not be null
 	at org.geotools.geopkg.Features$2.write(Features.java:87)
 	at org.geotools.geopkg.GeoPackage.add(GeoPackage.java:937)
 ```
+
+# Fix
+
+To fix this, simply explicitly define version of `sqlite-jdbc` used by [gt-geopkg-31.2](https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc/3.41.2.2):
+
+```xml
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.41.2.2</version>
+    </dependency>
+```
+
+This issue was sent to GeoTools : <https://osgeo-org.atlassian.net/browse/GEOT-7613>.
